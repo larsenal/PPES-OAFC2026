@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OAFC Trade Show 2026 - Bulletin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rouge:#C0392B;--rouge-clair:#FDECEA;--rouge-medium:#E74C3C;
+    --anthracite:#1C1C1E;--gris-fonce:#2C2C2E;--gris-moyen:#636366;
+    --gris-clair:#AEAEB2;--gris-fond:#F2F2F7;--blanc:#FFFFFF;
+    --bleu-info:#1E6FBA;--bleu-fond:#EAF2FC;
+    --vert:#1A7F4B;--vert-fond:#EAF5EF;
+    --orange:#B45309;--orange-fond:#FEF3C7;
+    --radius:14px;--radius-sm:8px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--gris-fond);color:var(--anthracite);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+  /* HEADER */
+  .header{background:var(--anthracite);padding:28px 20px 22px;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:var(--rouge);opacity:.15;}
+  .header::after{content:'';position:absolute;bottom:-50px;left:40px;width:100px;height:100px;border-radius:50%;background:var(--rouge-medium);opacity:.1;}
+  .badge-edition{display:inline-block;background:var(--rouge);color:#fff;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:10px;}
+  .header h1{font-family:'DM Serif Display',serif;color:#fff;font-size:26px;line-height:1.2;font-weight:400;margin-bottom:6px;}
+  .header h1 span{color:var(--rouge-medium);font-style:italic;}
+  .header-meta{color:var(--gris-clair);font-size:12px;margin-top:8px;display:flex;flex-wrap:wrap;gap:10px;}
+  .header-meta span{display:flex;align-items:center;gap:5px;}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--rouge-medium);display:inline-block;flex-shrink:0;}
+
+  /* ONGLETS ACCUEIL */
+  .home-grid{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:680px;margin:0 auto;}
+  .home-tile{background:var(--blanc);border-radius:var(--radius);padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;border:2px solid transparent;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:border-color .2s,transform .15s;}
+  .home-tile:active{transform:scale(.97);}
+  .home-tile:hover{border-color:var(--rouge);}
+  .tile-icon{font-size:28px;}
+  .tile-label{font-size:13px;font-weight:600;color:var(--anthracite);text-align:center;line-height:1.3;}
+  .tile-sub{font-size:11px;color:var(--gris-moyen);text-align:center;}
+
+  /* BANNIÈRE */
+  .banniere{background:var(--rouge-clair);border-left:4px solid var(--rouge);border-radius:var(--radius-sm);padding:12px 14px;margin:0 16px 14px;font-size:13px;color:var(--rouge);font-weight:500;}
+
+  /* PAGES */
+  .page{display:none;padding:16px;max-width:680px;margin:0 auto;}
+  .page.active{display:block;}
+
+  /* BARRE RETOUR */
+  .back-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .back-btn{display:flex;align-items:center;gap:6px;background:var(--blanc);border:none;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--rouge);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  .back-btn:active{opacity:.8;}
+  .page-title{font-size:15px;font-weight:600;color:var(--anthracite);}
+
+  /* SECTIONS */
+  .section{background:var(--blanc);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+  .section-header{padding:14px 16px 10px;border-bottom:1px solid #F2F2F7;display:flex;align-items:center;gap:10px;}
+  .section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+  .icon-rouge{background:var(--rouge-clair);}
+  .icon-bleu{background:var(--bleu-fond);}
+  .icon-vert{background:var(--vert-fond);}
+  .icon-orange{background:var(--orange-fond);}
+  .section-titre{font-size:15px;font-weight:600;color:var(--anthracite);}
+  .section-sous-titre{font-size:11px;color:var(--gris-moyen);margin-top:1px;}
+
+  /* HORAIRE */
+  .horaire-item{display:flex;align-items:flex-start;padding:12px 16px;border-bottom:1px solid #F2F2F7;gap:12px;}
+  .horaire-item:last-child{border-bottom:none;}
+  .horaire-heure{background:var(--gris-fond);border-radius:var(--radius-sm);padding:5px 8px;font-size:11px;font-weight:600;color:var(--gris-fonce);white-space:nowrap;min-width:72px;text-align:center;flex-shrink:0;}
+  .horaire-heure.actif{background:var(--rouge);color:#fff;}
+  .horaire-detail{flex:1;}
+  .horaire-titre{font-weight:500;font-size:13px;color:var(--anthracite);margin-bottom:2px;}
+  .horaire-note{font-size:12px;color:var(--gris-moyen);}
+
+  /* JOUR LABEL */
+  .jour-label{padding:8px 16px 3px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--rouge);}
+
+  /* LISTE */
+  .liste-item{display:flex;align-items:flex-start;padding:10px 16px;border-bottom:1px solid #F2F2F7;gap:10px;}
+  .liste-item:last-child{border-bottom:none;}
+  .liste-puce{width:5px;height:5px;border-radius:50%;background:var(--rouge);margin-top:7px;flex-shrink:0;}
+  .liste-texte{flex:1;font-size:13px;color:var(--anthracite);line-height:1.5;}
+  .liste-texte strong{font-weight:600;}
+  .liste-sous{font-size:11px;color:var(--gris-moyen);margin-top:2px;}
+
+  /* GRILLE ÉQUIPE */
+  .personnes-grid{padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .personne-chip{background:var(--gris-fond);border-radius:var(--radius-sm);padding:9px 11px;}
+  .personne-nom{font-size:12px;font-weight:600;color:var(--anthracite);}
+  .personne-role{font-size:10px;color:var(--gris-moyen);margin-top:1px;}
+  .personne-badge{display:inline-block;margin-top:4px;background:var(--rouge-clair);color:var(--rouge);font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px;}
+
+  /* CODE VESTIMENTAIRE */
+  .code-item{padding:10px 16px;border-bottom:1px solid #F2F2F7;display:flex;gap:10px;align-items:flex-start;}
+  .code-item:last-child{border-bottom:none;}
+  .code-tag{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+  .tag-oui{background:var(--vert-fond);color:var(--vert);}
+  .tag-non{background:var(--rouge-clair);color:var(--rouge);}
+  .tag-note{background:var(--orange-fond);color:var(--orange);}
+  .code-desc{font-size:13px;color:var(--anthracite);line-height:1.5;}
+
+  /* RÉSERVATIONS */
+  .resa-card{margin:10px 16px;border:1px solid #E5E5EA;border-radius:var(--radius-sm);overflow:hidden;}
+  .resa-card:last-child{margin-bottom:14px;}
+  .resa-top{background:var(--gris-fond);padding:9px 12px;display:flex;justify-content:space-between;align-items:center;}
+  .resa-nom{font-size:13px;font-weight:600;}
+  .resa-statut{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;}
+  .statut-confirme{background:var(--vert-fond);color:var(--vert);}
+  .statut-attente{background:var(--orange-fond);color:var(--orange);}
+  .resa-details{padding:9px 12px;}
+  .resa-ligne{display:flex;gap:8px;font-size:12px;margin-bottom:5px;align-items:flex-start;}
+  .resa-ligne:last-child{margin-bottom:0;}
+  .resa-label{color:var(--gris-moyen);width:80px;flex-shrink:0;}
+  .resa-val{color:var(--anthracite);font-weight:500;}
+  .resa-val a{color:var(--bleu-info);}
+
+  /* CONTACTS */
+  .contact-item{display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid #F2F2F7;gap:12px;text-decoration:none;}
+  .contact-item:last-child{border-bottom:none;}
+  .contact-avatar{width:38px;height:38px;border-radius:50%;background:var(--rouge-clair);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--rouge);flex-shrink:0;}
+  .contact-info{flex:1;}
+  .contact-nom{font-size:13px;font-weight:600;color:var(--anthracite);}
+  .contact-role{font-size:11px;color:var(--gris-moyen);}
+  .contact-tel{font-size:12px;color:var(--bleu-info);margin-top:1px;}
+  .contact-arrow{color:var(--gris-clair);font-size:18px;}
+
+  /* FOOTER */
+  .footer{text-align:center;padding:20px 20px 36px;color:var(--gris-clair);font-size:11px;line-height:1.8;}
+  .footer strong{color:var(--gris-moyen);}
+
+  @media(max-width:360px){
+    .header h1{font-size:22px;}
+    .personnes-grid{grid-template-columns:1fr;}
+    .home-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge-edition">2026 EDITION</div>
+  <h1>OAFC<span> Trade Show</span></h1>
+  <div class="header-meta">
+    <span><span class="dot"></span> November 19-21, 2026</span>
+    <span><span class="dot"></span> Niagara Falls Convention Center</span>
+    <span><span class="dot"></span> 10 people</span>
+    <span><span class="dot"></span> Acumatica - Project #132</span>
+  </div>
+</div>
+
+<!-- PAGE ACCUEIL -->
+<div class="page active" id="page-home">
+  <div class="banniere" style="margin-top:14px;">
+    ⚠️ Please refer to this document at any time. The information will be updated on an ongoing basis. <strong>HAVE A GREAT CONFERENCE! WE ARE PPE SOLUTIONS!</strong>
+  </div>
+  <div class="home-grid">
+    <div class="home-tile" onclick="showPage('infos')">
+      <div class="tile-icon">📋</div>
+      <div class="tile-label">General Information</div>
+      <div class="tile-sub">Location, Booths, Show Hours</div>
+    </div>
+    <div class="home-tile" onclick="showPage('5a7')">
+      <div class="tile-icon">🥂</div>
+      <div class="tile-label">Hospitality Night</div>
+      <div class="tile-sub">Friday, November 20, 2026</div>
+    </div>
+    <div class="home-tile" onclick="showPage('interieur')">
+      <div class="tile-icon">🏢</div>
+      <div class="tile-label">Show Details</div>
+      <div class="tile-sub">Booths 1223-1231/1322-1330 (10 booths)</div>
+    </div>
+        <div class="home-tile" onclick="showPage('vestimentaire')">
+      <div class="tile-icon">👔</div>
+      <div class="tile-label">Dress Code</div>
+      <div class="tile-sub">Per Day</div>
+    </div>
+    <div class="home-tile" onclick="showPage('hotel')">
+      <div class="tile-icon">🏨</div>
+      <div class="tile-label">Hotel Reservations</div>
+      <div class="tile-sub">Rooms and Location</div>
+    </div>
+    <div class="home-tile" onclick="showPage('restaurant')">
+      <div class="tile-icon">🍽️</div>
+      <div class="tile-label">Restaurants</div>
+      <div class="tile-sub">Near our hotel</div>
+    </div>
+    <div class="home-tile" onclick="showPage('equipe')">
+      <div class="tile-icon">👥</div>
+      <div class="tile-label">TEAM</div>
+      <div class="tile-sub">10 people</div>
+    </div>
+    <div class="home-tile" onclick="showPage('contacts')">
+      <div class="tile-icon">📞</div>
+      <div class="tile-label">Contacts</div>
+      <div class="tile-sub">in Emergency</div>
+    </div>
+  </div>
+  <div class="footer">
+    <strong>OAFC Trade Show 2026</strong><br>
+    Update on November 2, 2026<br>
+    For all corrections: Marie-Pier Dupuis
+  </div>
+</div>
+
+<!-- PAGE INFOS GÉNÉRALES -->
+<div class="page" id="page-infos">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">General Information</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-bleu">📋</div>
+      <div><div class="section-titre">General Information</div><div class="section-sous-titre">Read This First</div></div>
+    </div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Location:</strong> Niagara Falls Convention Centre - 6815 Stanley Ave, Niagara Falls, ON</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Dates:</strong> November 19-21, 2026</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Our Booths:</strong> 1223-1231/1322-1330 (10 booths)<div class="liste-sous">BALLROOM D</div></div></div>
+<div class="jour-label">SHOW DETAILS</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">→</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">SHOW HOURS</div>
+<div class="horaire-note"><strong>Thursday, November 19:</strong> 4:00pm – 8:00pm<br><strong>Friday, November 20:</strong> 11:00am – 4:00pm<br><strong>Saturday, November 21:</strong> 10:00am – 2:00pm<br></div>
+      </div>        
+    </div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>LOAD-IN/OUT:</strong> The loading dock is located on the west side of the building with entrances from Stanley Avenue and Dunn Street. All materials must be brought in via the loading dock.</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>SHIPPING:</strong> NFCC cannot accept any freight or deliveries prior to our contracted load-in date & time. Exhibitors may carry their own material to the NFCC exhibit floor from the dock to their booth and back.</div></div>
+  </div>
+</div>
+
+<!-- PAGE 5 À 7 -->
+<div class="page" id="page-5a7">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Hospitality Night</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-rouge">🥂</div>
+      <div><div class="section-titre">Hospitality Night - Event hosted by Commercial and PPE Solutions</div><div class="section-sous-titre">Friday, November 20, 2026</div></div>
+    </div>
+<div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Location:</strong> Niagara Parks Power Station - 7005 Niagara Parkway, Niagara Falls<div class="liste-sous">Shuttle Service Available / Every 15 minutes - 7:15pm to 11:45pm</div></div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Dates:</strong> November 20 - 7:30pm</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Our Sponsors:</strong> Whelen, Starfield LION, Gore-Tex, Pierce, MAXIMETAL, Scott Safety, Waterous</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Food & Drinks:</strong> We'll be serving drinks and appetizers.</div></div>
+    <div class="liste-item"><div class="liste-puce"></div><div class="liste-texte"><strong>Teardown:</strong> 11:30pm-12:30am</div></div>
+
+    <div class="jour-label">SCHEDULE</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">→</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Details to follow</div>
+<div class="horaire-note"><strong>Camion échelle :</strong> Louis-David<br><strong>Mini Rescue F550 :</strong> Philippe<br><strong>MS1200 :</strong> Alexandre<br><strong>PIC2400 :</strong> Nikolas<br><strong>Pick-up blanc + remorque blanche :</strong> Olivier<br><strong>Pick-up noir + remorque grise :</strong> Marc-André</div>
+      </div>        
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">13h30</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Montage de la salle pour le 5 à 7</div>
+        <div class="horaire-note">Chapiteau extérieur — attribution des tâches remise sur place par Marie-Pier</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">16h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Être présents au chapiteau</div>
+        <div class="horaire-note">Mots de Marc-André et Louis-David</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">16h30</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Ouverture des portes du chapiteau</div>
+        <div class="horaire-note">Accueil et échanges</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">20h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Souper au restaurant Le Mirador</div>
+        <div class="horaire-note">Réservation 16 pers. au nom de Marie-Pier Dupuis · 10 boul. Cartier, Rivière-du-Loup (5.6 km de l'hôtel)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE EXPOSITION INTÉRIEURE -->
+<div class="page" id="page-interieur">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Show Details</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-rouge">🏢</div>
+      <div><div class="section-titre">Show Details</div><div class="section-sous-titre">Booths: 1223-1231/1322-1330 (10 booths)</div></div>
+    </div>
+    <div class="jour-label">Thursday, November 19</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">7:00am</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Booth Set-Up</div>
+        <div class="horaire-note">Ballroom D | Booth Set-Up provided by Marie-Pier</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">1:00pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-detail"><div class="horaire-titre">Cleaning the boots</div><div class="horaire-note">Make sure everything is ready and clean</div></div>
+    </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">3:30pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Being present at our booths</div>
+        <div class="horaire-note">Team Meeting</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">4:00pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Start of the OAFC Trade Show</div>
+     
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">8:00pm</div>
+      <div class="horaire-detail"><div class="horaire-titre">End - OAFC Trade Show</div>
+</div>
+</div>
+<div class="jour-label">Friday, November 20</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">10:30am</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Be present at the booths</div>
+        <div class="horaire-note">Ballroom D | Make sure everything is ready and clean</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">11:00am</div>
+      <div class="horaire-detail">
+        <div class="horaire-detail"><div class="horaire-titre">Start of the OAFC Trade Show</div></div>
+    </div>
+    </div>
+<div class="horaire-item">
+      <div class="horaire-heure">4:00pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-detail"><div class="horaire-titre">End - OAFC Trade Show</div></div>
+    </div>
+    </div>
+
+    <div class="horaire-item">
+      <div class="horaire-heure actif">7:00pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Hospitality Night with Commercial</div>
+        <div class="horaire-note">See the details on the Hospitality Night page.</div>
+      </div>
+    </div>
+    <div class="jour-label">Saturday, November 21</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">10:30am</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Be present at the booths</div>
+        <div class="horaire-note">Ballroom D | Make sure everything is ready and clean</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">11:00am</div>
+      <div class="horaire-detail">
+        <div class="horaire-detail"><div class="horaire-titre">Start of the OAFC Trade Show</div></div>
+    </div>
+    </div>
+<div class="horaire-item">
+      <div class="horaire-heure">2:00pm</div>
+      <div class="horaire-detail">
+        <div class="horaire-detail"><div class="horaire-titre">End - OAFC Trade Show</div></div>
+    </div>
+    </div>
+
+    <div class="horaire-item">
+      <div class="horaire-heure actif">MOVE OUT</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Exhibitors must clear booths and materials:</div>
+        <div class="horaire-note">Saturday, November 21 — 2:00pm–6:00pm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE EXPOSITION EXTÉRIEURE -->
+<div class="page" id="page-exterieur">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Exposition extérieure</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-rouge">🚒</div>
+      <div><div class="section-titre">Exposition extérieure</div><div class="section-sous-titre">Camions — Espaces #1 à #4</div></div>
+    </div>
+    <div class="jour-label">Samedi 23 mai</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">09h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Arrivée et positionnement des camions</div>
+        <div class="horaire-note">Coordonnateurs : Alexandre et Louis-David</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">09h30</div>
+      <div class="horaire-detail"><div class="horaire-titre">Nettoyage des camions</div><div class="horaire-note">Par toute l'équipe de L'Arsenal</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">11h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Dîner — Café Brûlerie RDL</div>
+        <div class="horaire-note">419 rue Lafontaine, Rivière-du-Loup</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">13h00</div>
+      <div class="horaire-detail"><div class="horaire-titre">Début exposition camions — BON CONGRÈS !</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">16h00</div>
+      <div class="horaire-detail"><div class="horaire-titre">Fin exposition camions</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">18h–18h45</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Cocktail d'ouverture — Louis-David, Marc-André, Alexandre et Christian</div>
+        <div class="horaire-note">Hall de la salle Congrès</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">19h–22h</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Soirée de la présidence — Louis-David, Marc-André, Alexandre et Christian</div>
+        <div class="horaire-note">Salle Congrès</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">19h30</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Souper — L'Estaminet</div>
+        <div class="horaire-note">18 pers. au nom de Paméla Bernier · 299 rue Lafontaine, Rivière-du-Loup (2.6 km de l'hôtel)</div>
+      </div>
+    </div>
+    <div class="jour-label">Dimanche 24 mai</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">07h30</div>
+      <div class="horaire-detail"><div class="horaire-titre">Nettoyage des camions et préparer l'espace</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">08h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Début de l'exposition extérieure</div>
+        <div class="horaire-note">Présents : Alexandre, Nikolas, Philippe, Louis-David</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">11h30</div>
+      <div class="horaire-detail"><div class="horaire-titre">Dîner — Boîtes à lunch</div><div class="horaire-note">« Tout sous un même chef »</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">16h00</div>
+      <div class="horaire-detail"><div class="horaire-titre">Fin exposition camions</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">18h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Souper — Buffet du congrès de l'AGSICQ</div>
+        <div class="horaire-note">Restaurant La Verrière + Salle Kamouraska</div>
+      </div>
+    </div>
+    <div class="jour-label">Lundi 25 mai</div>
+    <div class="horaire-item">
+      <div class="horaire-heure">08h00</div>
+      <div class="horaire-detail"><div class="horaire-titre">Nettoyage des camions et préparer l'espace</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">08h30</div>
+      <div class="horaire-detail"><div class="horaire-titre">Début de l'exposition extérieure</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">12h–13h</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Dîner — Buffet du congrès de l'AGSICQ</div>
+        <div class="horaire-note">Restaurant La Verrière + Salle Kamouraska</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure actif">15h00</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Fin exposition camions — Démontage</div>
+        <div class="horaire-note">Intérieur et extérieur par toute l'équipe de L'Arsenal</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE CODE VESTIMENTAIRE -->
+<div class="page" id="page-vestimentaire">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Dress Code</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">👔</div>
+      <div><div class="section-titre">Outfit per day</div><div class="section-sous-titre">The clothes will be shipped to you shortly.</div></div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">THU, Nov 19</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Booth Set-Up</div>
+        <div class="horaire-note"><strong>ALL:</strong> PPE Solutions black t-shirt with comfortable pants.<br><strong>LOAD-IN/OUT:</strong> During load in and load out all exhibitors must wear certified toe safety booths.</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">THU, Nov 19</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">OAFC Trade Show</div>
+        <div class="horaire-note">PPE Solutions white polo with dark pants.</div>
+
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">FRI, Nov 20</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">OAFC Trade Show</div>
+        <div class="horaire-note">PPE Solutions red polo with black pants.</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">FRI, Nov 20</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">Hospitality Night</div>
+        <div class="horaire-note"><strong>MEN:</strong> PPE Solutions black shirt.<br><strong>WOMEN:</strong> Black dress.</div>
+      </div>
+    </div>
+    <div class="horaire-item">
+      <div class="horaire-heure">SAT, Nov 21</div>
+      <div class="horaire-detail">
+        <div class="horaire-titre">OAFC Trade Show</div>
+        <div class="horaire-note">PPE Solutions black polo with dark pants.</div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-vert">✅</div>
+      <div><div class="section-titre">General Rules</div></div>
+    </div>
+    <div class="code-item"><span class="code-tag tag-oui">✓ Accepted</span><div class="code-desc">Polo shirt or sweater with the company logo (provided)</div></div>
+    <div class="code-item"><span class="code-tag tag-oui">✓ Accepted</span><div class="code-desc">Dark dress pants (black, gray or navy)</div></div>
+    <div class="code-item"><span class="code-tag tag-oui">✓ Accepted</span><div class="code-desc">Comfortable, closed-toe black shoes — for days spent on your feet</div></div>
+    <div class="code-item"><span class="code-tag tag-non">✗ Avoided</span><div class="code-desc">Jeans, shorts, sneakers, or sandals</div></div>
+    <div class="code-item"><span class="code-tag tag-non">✗ Avoided</span><div class="code-desc">Clothing without company logos during exhibition hours</div></div>
+  </div>
+</div>
+
+<!-- PAGE HÉBERGEMENT -->
+<div class="page" id="page-hotel">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Accommodations</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-bleu">🏨</div>
+      <div><div class="section-titre">Hilton Niagara Falls/Fallsview Hotel & Suites</div><div class="section-sous-titre">The reservation is in the name of the person in red.</div></div>
+    </div>
+    <div class="resa-card">
+      <div class="resa-top"><div class="resa-nom">Hilton Niagara Falls/Fallsview Hotel & Suites</div><div class="resa-statut statut-confirme">✓ Confirmed</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Adress</span><span class="resa-val">‌6361 Fallsview Boulevard, Niagara Falls, ON, L2G 3V9 / 850 meters from the convention center.</span></div>
+        <div class="resa-ligne"><span class="resa-label">Check In</span><span class="resa-val">Nov 18 - 4:00pm</span></div>
+        <div class="resa-ligne"><span class="resa-label">Check Out</span><span class="resa-val">Nov 21 - 11:00am</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #1</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">Bill Frederick</span> (#3102733364)</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #2</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">John Wilson</span> (#3102733364)</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #3</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">Brett Leng</span> & Steve Proctor (#3102733364)</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #4</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">Brett Smith</span> & Keith Cassidy (#3102733364)</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #5</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">Marc-André Lemaire</span> & Louis-David Lemaire (#3106525193)</span></div>
+        <div class="resa-ligne"><span class="resa-label">Room #6</span><span class="resa-val"><span style="color:var(--rouge);font-weight:600;">Marie-Pier Dupuis</span> (#3106525193)</span></div>
+        <div class="resa-ligne"><span class="resa-label"><strong>Parking</strong></span><span class="resa-val">Self-Parking 75.00 CAD Per Night. Valet Parking 100.00 CAD Per Night.</div></div>
+        <div class="code-item"><span class="code-tag tag-non">No Smoking</span><div class="code-desc">It's a smoke-free hotel.</div></div>
+        <div class="code-item"><span class="code-tag tag-oui">Breakfast</span><div class="code-desc">Not included. There is a restaurant on site, open from 7:00am to 11:00am.</div></div>
+        <div class="code-item"><span class="code-tag tag-oui">Amenities</span><div class="code-desc">On-site restaurant / Indoor pool / Fitness center / EV charging / Room service</div></div>
+      </div>
+    </div>
+  </div>
+  
+<!-- PAGE RESTAURANTS -->
+<div class="page" id="page-restaurant">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Restaurants</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-vert">🍽️</div>
+      <div><div class="section-titre">Restaurants</div><div class="section-sous-titre">Here are a few suggestions for restaurants near our hotel.</div></div>
+    </div>
+    <div class="resa-card">
+      <div class="resa-top"><div class="resa-nom">Fallsview Breakfast at Hilton</div><div class="resa-statut statut-confirme">✓ Breakfast</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Location</span><span class="resa-val"><strong>Hilton Hotel</strong> — <a href="https://niagarafallshilton.com/breakfastmenu" target="_blank">View Menu</a></span></div>
+        <div class="resa-ligne"><span class="resa-label">Open Hours</span><span class="resa-val">7:00am-10:00am</span></div>
+</div>
+    </div>
+    <div class="resa-card">
+      <div class="resa-top"><div class="resa-nom">Continental Pancake House</div><div class="resa-statut statut-confirme">✓ Breakfast</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Location</span><span class="resa-val"><strong>5810 Stanley Ave., Niagara Falls</strong> — <a href="https://www.continentalpancakehouse.com/">Website</a></span></div>
+        <div class="resa-ligne"><span class="resa-label">Open Hours</span><span class="resa-val">7:30am-2:00pm</span></div>
+        <div class="resa-ligne"><span class="resa-label">Phone</span><span class="resa-val">905-354-6661</span></div>
+        </div>
+    </div>
+    <div class="resa-card">
+      <div class="resa-top"><div class="resa-nom">Copacabana Brazilian Steakhouse</div><div class="resa-statut statut-confirme">✓ Dinner</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Location</span><span class="resa-val"><strong>6671 Fallsview Blvd, Niagara Falls, On</strong> — <a href="https://www.thecopa.ca/menus-niagara/">Website</a></span></div>
+        <div class="resa-ligne"><span class="resa-label">Open Hours</span><span class="resa-val">5:00pm-10:00pm</span></div>
+        <div class="resa-ligne"><span class="resa-label">Phone</span><span class="resa-val">289-402-8234 <a href="https://www.opentable.ca/copacabana-brazilian-steak-house-niagara-falls">Reserve a Table</a></span></div>
+        </div>
+    </div>
+    <div class="resa-card" style="margin-bottom:14px;">
+      <div class="resa-top"><div class="resa-nom">The Keg Steakhouse and Bar</div><div class="resa-statut statut-confirme">✓ Dinner</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Location</span><span class="resa-val">6455 Fallsview Blvd, Niagara Falls, On</strong> — <a href="https://www.thekegniagarafalls.com/menu.php">View Menu</a></span></div>
+        <div class="resa-ligne"><span class="resa-label">Open Hours</span><span class="resa-val">12:00pm-11:30pm</span></div>
+<div class="resa-ligne"><span class="resa-label">Phone</span><span class="resa-val">905-374-5170 <a href="https://www.thekegniagarafalls.com/reservations.php">Reserve a Table</a></span></div>
+      </div>
+    </div>
+<div class="resa-card">
+      <div class="resa-top"><div class="resa-nom">Shoeless Joe's Sports Grill</div><div class="resa-statut statut-confirme">✓ Dinner</div></div>
+      <div class="resa-details">
+        <div class="resa-ligne"><span class="resa-label">Location</span><span class="resa-val"><strong>6380 Fallsview Blvs unit R10, Niagara Falls, On</strong> — <a href="https://shoelessjoes.ca/locations/fallsview/">Website</a></span></div>
+        <div class="resa-ligne"><span class="resa-label">Open Hours</span><span class="resa-val">11:00am-12:00am</span></div>
+        <div class="resa-ligne"><span class="resa-label">Phone</span><span class="resa-val">905-354-5552</span></div>
+        </div>
+    </div>  
+</div>
+</div>
+
+<!-- PAGE ÉQUIPE -->
+<div class="page" id="page-equipe">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Team in Attendance</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-rouge">👥</div>
+      <div><div class="section-titre">Team in Attendance</div><div class="section-sous-titre">10 people</div></div>
+    </div>
+    <div class="personnes-grid">
+      <div class="personne-chip"><div class="personne-nom">Bill Frederick</div><div class="personne-role">General Manager</div></div>
+      <div class="personne-chip"><div class="personne-nom">John Wilson</div><div class="personne-role">Sales Manager</div></div>
+      <div class="personne-chip"><div class="personne-nom">Steve Proctor</div><div class="personne-role">Sales Representative</div></div>
+      <div class="personne-chip"><div class="personne-nom">Keith Cassidy</div><div class="personne-role">Sales Representative</div></div>
+      <div class="personne-chip"><div class="personne-nom">Harold Kelly</div><div class="personne-role">Sales Representative</div></div>
+      <div class="personne-chip"><div class="personne-nom">Brett Smith</div><div class="personne-role">Sales Representative</div></div>
+      <div class="personne-chip"><div class="personne-nom">Brett Leng</div><div class="personne-role">Sales Representative</div></div>
+      <div class="personne-chip"><div class="personne-nom">Marc-André Lemaire</div><div class="personne-role">Co-President</div></div>
+      <div class="personne-chip"><div class="personne-nom">Louis-David Lemaire</div><div class="personne-role">Co-President</div></div>
+      <div class="personne-chip"><div class="personne-nom">Marie-Pier Dupuis</div><div class="personne-role">Marketing</div></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PAGE CONTACTS -->
+<div class="page" id="page-contacts">
+  <div class="back-bar">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <span class="page-title">Key Contacts</span>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-bleu">📞</div>
+      <div><div class="section-titre">Key Contacts</div><div class="section-sous-titre">In case of an emergency</div></div>
+    </div>
+    <a class="contact-item" href="tel:+18198166904"><div class="contact-avatar">MP</div><div class="contact-info"><div class="contact-nom">Marie-Pier Dupuis</div><div class="contact-role">Logistics Manager</div><div class="contact-tel">819 816-6904</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+13657891326"><div class="contact-avatar">AM</div><div class="contact-info"><div class="contact-nom">Andrea Miele</div><div class="contact-role">Business Development Coordinator - OAFC</div><div class="contact-tel">365-789-1326</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+19054269865"><div class="contact-avatar">BA</div><div class="contact-info"><div class="contact-nom">Brian Arnold</div><div class="contact-role">Executive Director (Interim) - OAFC</div><div class="contact-tel">905-426-9865 ext. 1228</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+19052706767"><div class="contact-avatar">S</div><div class="contact-info"><div class="contact-nom">Stronco</div><div class="contact-role">Official Show Contractor (carpet, furniture, banner, etc.)</div><div class="contact-tel">905-270-6767</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+19053576222"><div class="contact-avatar">ES</div><div class="contact-info"><div class="contact-nom">Exhibitor Services - NFCC</div><div class="contact-role">Electricity, internet, food & breuvage products, housekeeping, parking passes</div><div class="contact-tel">905-357-6222 ext. 7217</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+19053547887"><div class="contact-avatar" style="background:var(--bleu-fond);color:var(--bleu-info);">HN</div><div class="contact-info"><div class="contact-nom">Hilton Niagara Falls/Fallsview Hotel & Suites</div><div class="contact-role">Reception</div><div class="contact-tel">905-354-7887</div></div><div class="contact-arrow">›</div></a>
+    <a class="contact-item" href="tel:+16042305977"><div class="contact-avatar" style="background:var(--vert-fond);color:var(--vert);">RL</div><div class="contact-info"><div class="contact-nom">Rod Leland</div><div class="contact-role">Marketing Director - Commercial</div><div class="contact-tel">604-230-5977</div></div><div class="contact-arrow">›</div></a>
+  </div>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
